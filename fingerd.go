@@ -136,13 +136,13 @@ func handleUserQuery(user string, verbose bool) string {
 
 	exists, name, plan := userinfo(user)
 
-    if exists {
-        response = "User: " + user + "\r\n"
-        response += "Name: " + name + "\r\n"
-        response += "Plan: " + plan + "\r\n"
-    } else {
-        response = user + ": no such user\r\n"
-    }
+	if exists {
+		response = "User: " + user + "\r\n"
+		response += "Name: " + name + "\r\n"
+		response += "Plan: " + plan + "\r\n"
+	} else {
+		response = user + ": no such user\r\n"
+	}
 
 	return response
 }
