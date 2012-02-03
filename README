@@ -16,3 +16,34 @@
   2. Altered source versions must be plainly marked as such, and must not be
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
+
+
+USAGE
+
+  gofingerd [-p port] [-i ip/host]
+
+  -p port       listen on specified port number (default: 79)
+
+  -i ip/host    listen on specified IP address or hostname (default: empty,
+                meaning listen on all interfaces)
+
+DESCRIPTION
+
+  gofingerd implements the basic components of RFC 1288, with some concessions
+  for privacy and security.
+
+  The default response (finger @host) does not include a user listing, but it
+  does mention the hostname (based on the -i parameter if specified) and the
+  uptime of the system.
+
+  User requests (finger user@host) include only login name, real name (from the
+  GECOS field in /etc/passwd), and contents of the user's ~/.plan file, if it is
+  readable by the user running gofingerd (generally root, since listening on
+  port 79 requires increased privileges).  Users can only be looked up based on
+  login name.  Nonexistent users are reported with an error message.
+
+  Verbose requests (finger -l @host and finger -l user@host) are supported, but
+  the response is currently the same as the normal response.
+
+  Forwarding requests (finger user@host1@host2@...) are intentionally not
+  supported and respond with an appropriate error message.
