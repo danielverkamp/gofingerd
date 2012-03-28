@@ -24,24 +24,24 @@ package main
 import (
 	"bufio"
 	"flag"
+	"fmt"
+	"io/ioutil"
 	"net"
 	"net/textproto"
 	"os"
 	"os/user"
-	"fmt"
-	"time"
 	"regexp"
 	"strconv"
 	"strings"
 	"syscall"
-	"io/ioutil"
+	"time"
 )
 
 var listen_port *int = flag.Int("p", 79, "listen port")
 var listen_intf *string = flag.String("i", "", "listen on interface")
 
 func log(msg string) {
-	fmt.Fprintf(os.Stdout, "%s: %s\n", time.LocalTime().String(), msg)
+	fmt.Fprintf(os.Stdout, "%s: %s\n", time.Now().String(), msg)
 }
 
 var my_hostname string
@@ -90,7 +90,7 @@ func handleClient(conn net.Conn) {
 	tp := textproto.NewReader(bio)
 	query, err := tp.ReadLine()
 	if err != nil {
-		log("Error reading line: " + err.String())
+		log("Error reading line: " + err.Error())
 		return
 	}
 
@@ -150,7 +150,7 @@ func handleUserQuery(user string, verbose bool) string {
 func uptime() string {
 	var sysinfo syscall.Sysinfo_t
 	errno := syscall.Sysinfo(&sysinfo)
-	if errno == 0 {
+	if errno == nil {
 		seconds := sysinfo.Uptime
 
 		minutes := seconds / 60
@@ -186,9 +186,9 @@ func userinfo(username string) (exists bool, name, plan string) {
 	return false, "", ""
 }
 
-func checkError(err os.Error) {
+func checkError(err error) {
 	if err != nil {
-		log("fatal error: " + err.String())
+		log("fatal error: " + err.Error())
 		os.Exit(1)
 	}
 }
