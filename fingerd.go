@@ -54,7 +54,7 @@ func main() {
 	log("gofingerd starting...")
 	log("attempting to listen on " + service + "...")
 
-	tcpAddr, err := net.ResolveTCPAddr("ip4", service)
+	tcpAddr, err := net.ResolveTCPAddr("tcp4", service)
 	checkError(err)
 
 	listener, err := net.ListenTCP("tcp", tcpAddr)
