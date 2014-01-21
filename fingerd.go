@@ -102,7 +102,7 @@ func handleClient(conn net.Conn) {
 
 var list_users_re = regexp.MustCompile("^[ ]*(/[wW])?[ ]*$")
 var forward_re = regexp.MustCompile("@") // don't bother matching anything, just deny forward requests
-var user_re = regexp.MustCompile("^[ ]*((/[wW])[ ]+)?([a-zA-Z_\\-]+)[ ]*$")
+var user_re = regexp.MustCompile("^[ ]*((/[wW])[ ]+)?([a-zA-Z0-9!()_\\-.?\\[\\]`~]+)[ ]*$")
 
 func handleQuery(query string) string {
 	if forward_matches := forward_re.FindStringSubmatch(query); forward_matches != nil {
